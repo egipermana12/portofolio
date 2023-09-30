@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CKeditorImageUpload;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -38,4 +39,6 @@ Route::middleware([
     Route::get('/blogs', [BlogController::class, 'index'])
         ->name('blogs');
     Route::resource('blogs', BlogController::class)->except(['index']);
+
+    Route::post('/imageUpload', [CKeditorImageUpload::class, 'storeImage'])->name('imageUpload');
 });

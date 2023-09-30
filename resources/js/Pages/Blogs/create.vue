@@ -4,8 +4,20 @@ import Textinput from '@/Components/TextInput.vue';
 import ButtonLoading from '@/Components/ButtonLoading.vue';
 import { useForm } from '@inertiajs/vue3';
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import UploadAdapterCKeditor from '@/Components/UploadAdapterCKeditor.vue';
+
+function Uploader (editor) {
+    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+        return new UploadAdapterCKeditor( loader );
+    }
+}
 
 const editor = ClassicEditor;
+const editorConfig = {
+    toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'insertTable', '|', 'imageUpload', 'mediaEmbed', '|', 'undo', 'redo' ],
+    extraPlugins: [Uploader],
+}
+
 
 
 const form = useForm({
@@ -44,7 +56,7 @@ const submit = () => {
                         </div>
                         <div class="sm:col-span-2">
                             <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                            <Ckeditor :editor="editor" v-model="form.content"></Ckeditor>
+                            <Ckeditor :editor="editor" :config="editorConfig" v-model="form.content"></Ckeditor>
                             <div class="text-sm text-red-600">{{ form.errors.content }}</div>
                         </div>
                     </div>
