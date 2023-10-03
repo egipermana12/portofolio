@@ -17,26 +17,37 @@ const editorConfig = {
     extraPlugins: [Uploader],
 }
 
+const props = defineProps({
+    blogs: Object,
+})
+
 const form = useForm({
-    title: '',
-    slug: '',
-    content: ''   
+    title: props.blogs.title,
+    slug: props.blogs.slug,
+    content: props.blogs.content,
+    id: props.blogs.id  
 })
 
 const submit = () => {
-    form.post(route('blogs.store'));
+    form.put(route('blogs.update', props.blogs.id));
+}
+
+const destroy = () => {
+    if(confirm('Are you sure want to delete this blog?')){
+        form.delete(route('blogs.destroy', props.blogs.id));
+    }
 }
 
 </script>
 
 <template>
-    <AdminLayout title="Create Blog">
+    <AdminLayout title="Edit Blog">
         <main>
             <div class="flex items-center justify-between py-7 px-10">
                 <div>
-                    <h1 class="text-2xl font-semibold leading-relaxed text-gray-800">Create New Blogs</h1>
+                    <h1 class="text-2xl font-semibold leading-relaxed text-gray-800">Edit your Blogs</h1>
                     <p class="text-sm font-medium text-gray-500">
-                        Let's grow to your business! Create your blog and upload here
+                        Let's grow to your business! edit your blog and upload here
                     </p>
                 </div>
             </div>
@@ -57,8 +68,9 @@ const submit = () => {
                             <div class="text-sm text-red-600">{{ form.errors.content }}</div>
                         </div>
                     </div>
-                    <div class="flex items-center justify-end py-10 bg-gray-50 border-t border-gray-100">
-                        <ButtonLoading :loading="form.processing" type="submit" class="bg-indigo-600 px-4 py-2 rounded-md font-medium text-white hover:bg-indigo-700">Create Blog</ButtonLoading>
+                    <div class="flex items-center justify-between py-10 bg-gray-50 border-t border-gray-100">
+                        <button class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">Delete Your Blog</button>
+                        <ButtonLoading :loading="form.processing" type="submit" class="bg-indigo-600 px-4 py-2 rounded-md font-medium text-white hover:bg-indigo-700">Update Blog</ButtonLoading>
                     </div>
                 </form>
             </div>

@@ -24,7 +24,7 @@ class StoreBlogRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'content' => ['required'],
-            'slug' => ['required']
+            'slug' => ['required', 'unique:blogs,slug, ' . $this->blog->id]
         ];
     }
 
@@ -33,7 +33,8 @@ class StoreBlogRequest extends FormRequest
         return [
             'title.required' => 'title is required!',
             'content.required' => 'content is required!',
-            'slug.required' => 'slug is required!'
+            'slug.required' => 'slug is required!',
+            'slug.unique' => 'slug sudah terdaptar, slug harus unik'
         ];
     }
 }

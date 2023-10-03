@@ -14,17 +14,10 @@ class BlogController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request, BlogService $blogService)
     {
-        $search = $request->input('search');
-        $blogs = Blog::query()->when($search, function ($query, $search) {
-            $query->where('title', 'like', '%' . $search . '%')
-                ->orWhere('slug', 'like', '%' . $search . '%');
-        })
-            ->latest()
-            ->paginate(10)
-            ->withQueryString();
-        return Inertia::render('Blogs/index', ['blogs' => $blogs]);
+        $blogs = $blogService->fetchBlog($request);
+        return Inertia::render('Blogs/index', ['blogs' => $blogs, 'filters' => $request->all('search')]);
     }
 
     /**
@@ -42,7 +35,7 @@ class BlogController extends Controller
     {
         $blog = $blogService->createBlog($request);
 
-        return Redirect::route('blogs')->with('success', 'Contact created.');
+        return Redirect::route('blogs')->with('success', 'Blog has been created.');
     }
 
     /**
@@ -58,22 +51,25 @@ class BlogController extends Controller
      */
     public function edit(Blog $blog)
     {
-        //
+        return Inertia::render('Blogs/edit', ['blogs' => $blog]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Blog $blog)
+    public function update(StoreBlogRequest $request, Blog $blog, BlogService $blogService)
     {
-        //
+        $blog = $blogService->updateBlog($request, $blog);
+
+        return Redirect::back()->with('success', 'Blog has been updated.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Blog $blog)
+    public function destroy(Blog $blog, BlogService $blogService)
     {
-        //
+        $blog = $blogService->deleteBlog($blog);
+        return Redirect::route('blogs')->with('success', 'Blog has been deleted.');
     }
 }
