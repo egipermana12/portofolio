@@ -26,10 +26,9 @@ class BlogService
 
     public function createBlog(Request $request): Blog
     {
-        $slug = Str::slug($request->slug, '-');
         $blog = Blog::create([
             'title' => $request->title,
-            'slug' => $slug,
+            'slug' => $request->slug,
             'content' => $request->content
         ]);
 
@@ -40,11 +39,10 @@ class BlogService
     {
         $blog = Blog::findOrFail($blog->id);
 
-        $slug = Str::slug($request->slug, '-');
 
         $blog->update([
             'title' => $request->title,
-            'slug' => $slug,
+            'slug' => $request->slug,
             'content' => $request->content
         ]);
 

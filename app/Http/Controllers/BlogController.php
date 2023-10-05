@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\StoreBlogRequest;
+use App\Http\Requests\UpdateBlogRequest;
 use App\Models\Blog;
 use App\Services\BlogService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Validator;
 
 class BlogController extends Controller
 {
@@ -57,7 +59,7 @@ class BlogController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreBlogRequest $request, Blog $blog, BlogService $blogService)
+    public function update(UpdateBlogRequest $request, Blog $blog, BlogService $blogService)
     {
         $blog = $blogService->updateBlog($request, $blog);
 
