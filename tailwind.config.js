@@ -21,6 +21,6 @@ export default {
     },
 
     plugins: [
-        forms, typography,
+        forms, typography
     ],
 };

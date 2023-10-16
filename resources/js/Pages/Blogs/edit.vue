@@ -3,7 +3,7 @@ import AdminLayout from '@/Layouts/AdminLayout.vue';
 import Textinput from '@/Components/TextInput.vue';
 import ButtonLoading from '@/Components/ButtonLoading.vue';
 import { useForm } from '@inertiajs/vue3';
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import UploadAdapterCKeditor from '@/Components/UploadAdapterCKeditor.vue';
 
 function Uploader (editor) {
@@ -12,7 +12,7 @@ function Uploader (editor) {
     }
 }
 
-const editor = ClassicEditor;
+const editor = DecoupledEditor;
 const editorConfig = {
     extraPlugins: [Uploader],
 }
@@ -37,6 +37,14 @@ const destroy = () => {
         form.delete(route('blogs.destroy', props.blogs.id));
     }
 }
+
+const onReady = ( editor )  => {
+                // Insert the toolbar before the editable area.
+                editor.ui.getEditableElement().parentElement.insertBefore(
+                    editor.ui.view.toolbar.element,
+                    editor.ui.getEditableElement()
+                );
+            }
 
 </script>
 
@@ -64,7 +72,7 @@ const destroy = () => {
                         </div>
                         <div class="sm:col-span-2">
                             <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                            <Ckeditor :editor="editor" :config="editorConfig" v-model="form.content"></Ckeditor>
+                            <Ckeditor :editor="editor" @ready="onReady" :config="editorConfig" v-model="form.content"></Ckeditor>
                             <div class="text-sm text-red-600">{{ form.errors.content }}</div>
                         </div>
                     </div>

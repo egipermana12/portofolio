@@ -8,6 +8,10 @@
     <title inertia>{{ config('app.name', 'Laravel') }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <!-- ckeditor 4 -->
+    <!-- <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script> -->
+    <script src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />

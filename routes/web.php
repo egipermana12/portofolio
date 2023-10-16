@@ -42,3 +42,7 @@ Route::middleware([
 
     Route::post('/imageUpload', [CKeditorImageUpload::class, 'storeImage'])->name('imageUpload');
 });
+
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});

@@ -1,30 +1,25 @@
 <script setup>
+import { onMounted, ref } from 'vue';
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import Textinput from '@/Components/TextInput.vue';
+import CKEditor from '@/Components/CKEditor/index.vue';
 import ButtonLoading from '@/Components/ButtonLoading.vue';
 import { useForm } from '@inertiajs/vue3';
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import UploadAdapterCKeditor from '@/Components/UploadAdapterCKeditor.vue';
 
-function Uploader (editor) {
-    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-        return new UploadAdapterCKeditor( loader );
-    }
-}
-
-const editor = ClassicEditor;
-const editorConfig = {
-    extraPlugins: [Uploader],
-}
 
 const form = useForm({
     title: '',
     slug: '',
-    content: ''   
+    content: 'Hello World!'   
 })
 
 const submit = () => {
+    console.log(form.content);
     form.post(route('blogs.store'));
+}
+
+const getContent = (val) => {
+    form.content = val;
 }
 
 </script>
@@ -52,8 +47,8 @@ const submit = () => {
                             <Textinput v-model="form.slug" :error="form.errors.slug"  class="w-full" placeholder="Type blog slug"></Textinput>
                         </div>
                         <div class="sm:col-span-2">
-                            <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                            <Ckeditor :editor="editor" :config="editorConfig" v-model="form.content"></Ckeditor>
+                            <label for="description2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                            <CKEditor v-model="form.content" @sendContent="getContent" :content="form.content"></CKEditor>
                             <div class="text-sm text-red-600">{{ form.errors.content }}</div>
                         </div>
                     </div>

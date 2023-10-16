@@ -15,11 +15,12 @@ defineProps({
 <style>
     .ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline.ck-blurred{
         height: 400px !important;
+        border: 1px solid #c8c8c8;
     }
-
-    .ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable, .ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners{
+    .ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline.ck-focused{
         height: 400px !important;
     }
+    
 </style>
 
 <template>

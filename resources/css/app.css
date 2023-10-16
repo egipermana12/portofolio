@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
 [x-cloak] {
     display: none;
 }
@@ -198,4 +199,5 @@
 
 .ck-content a:any-link:active {
     color: red;
+}
 }
