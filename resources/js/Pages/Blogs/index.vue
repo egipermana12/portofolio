@@ -52,11 +52,6 @@ watch(search, (value) => {
                     <tr class="text-sm font-medium text-gray-700 border-b border-gray-200">
                         <td class="pl-10">
                         <div class="flex items-center gap-x-4">
-                            <input
-                            type="checkbox"
-                            class="w-6 h-6 text-indigo-600 rounded-md border-gray-300"
-                            indeterminate="indeterminate"
-                            />
                             <span>Title</span>
                         </div>
                         </td>
@@ -66,10 +61,6 @@ watch(search, (value) => {
                 <tbody>
                     <tr v-for="blog in props.blogs.data" :key="blog.id" class="hover:bg-gray-100 transition-colors group"> 
                         <td class="flex gap-x-4 items-center py-4 pl-10">
-                            <input
-                                type="checkbox"
-                                class="w-6 h-6 text-indigo-600 rounded-md border-gray-300"
-                            />
                             <Navlink :href="route('blogs.edit', blog.id)" class="font-medium text-left">
                                 {{ blog.title }}
                             </Navlink>

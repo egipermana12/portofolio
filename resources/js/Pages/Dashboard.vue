@@ -1,6 +1,7 @@
 <script setup>
 import { overview } from '@/Assets';
 import AdminLayout from '@/Layouts/AdminLayout.vue';
+import UploadImagePrev from '@/Components/UploadImagePrev/index.vue';
 
 const status = [
   { name: "Published", icon: overview },
@@ -65,7 +66,7 @@ const status = [
                     </tr>
                 </thead>
             </table>
-            
+            <UploadImagePrev></UploadImagePrev>
         </main>
     </AdminLayout>
 </template>
