@@ -32,9 +32,10 @@ const props = defineProps({
     }
 })
 
-const emit = defineEmits(['add', 'max', 'maxFileSize']);
+const emit = defineEmits(['add', 'max', 'maxFileSize', 'change', 'remove']);
 
 let addedMedia = reactive([]);
+let removeMedia = reactive([]);
 
 const fileChange = (event) => {
     //untuk loading
@@ -72,6 +73,14 @@ const fileChange = (event) => {
     // props.isLoading = false
 }
 
+const removeAddedMedia = (index) => {
+    let removeImage = addedMedia[index]
+    addedMedia.splice(index, 1)
+
+    emit('change', allMedia)
+    emit('remove', removeImage, removeMedia)
+}
+
 const allMedia = () => {
     return [...addedMedia];
 }
@@ -105,9 +114,9 @@ const allMedia = () => {
                 <!-- added media -->
                 <div v-for="(image, index) in addedMedia" :key="index" class="relative h-36 w-48 m-1">
                     <img :src="image.url" alt="" class="rounded-md border border-gray-200 h-36 w-48 object-cover object-center transition ease-in-out hover:brightness-90">
-                    <button @click="removeAddedMedia(index)" class="text-red-500 border-none p-0 m-0 cursor-pointer absolute top-0 right-0">
+                    <button @click="removeAddedMedia(index)" class="bg-red-500 rounded-full text-white border-none p-0 m-0 cursor-pointer absolute -top-1 -right-2">
                         <svg 
-                            class='text-4xl hover:text-red-800' 
+                            class='text-3xl hover:text-white' 
                             xmlns="http://www.w3.org/2000/svg" 
                             width="0.65em" 
                             height="0.65em" 

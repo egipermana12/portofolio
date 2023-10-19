@@ -17,6 +17,7 @@ class BlogService
             $query->where('title', 'like', '%' . $search . '%')
                 ->orWhere('slug', 'like', '%' . $search . '%');
         })
+            ->with('blogimages')
             ->latest()
             ->paginate(10)
             ->withQueryString();

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Blog extends Model
 {
@@ -12,6 +13,12 @@ class Blog extends Model
     protected $fillable = [
         'title',
         'slug',
-        'content'
+        'content',
+        'status'
     ];
+
+    public function BlogImages() :HasMany
+    {
+        return $this->hasMany(BlogImages::class);
+    }
 }

@@ -1,5 +1,5 @@
 <script setup>
-import { ref,watch } from 'vue'
+import { ref,watch,computed } from 'vue'
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import Pagination from '@/Components/Pagination.vue';
 import SearchFilter from '@/Components/SearchFilter.vue';
@@ -13,7 +13,6 @@ const props = defineProps({
     filters: Object
 });
 
-
 const search = ref(props.filters.search);
 
 const reset = () => {
@@ -23,6 +22,20 @@ const reset = () => {
 watch(search, (value) => {
     router.get("/blogs", {search: value}, {preserveState: true});
 });
+
+const getBlogs = computed(() => {
+    return props.blogs.data.map(blog => {
+        return {
+            ...blog,
+            image: blog.blogimages[0] ? blog.blogimages[0].image : 'traffic-landing-page.png'
+        }
+    })
+})
+
+
+const urlImage = () => {
+    return "/storage/blogs/"
+}
 
 </script>
 <template>
@@ -50,23 +63,34 @@ watch(search, (value) => {
             <table class="w-full border-b border-t border-gray-200">
                 <thead>
                     <tr class="text-sm font-medium text-gray-700 border-b border-gray-200">
-                        <td class="pl-10">
+                        <td class="pl-10 py-4 px-4">
                         <div class="flex items-center gap-x-4">
                             <span>Title</span>
                         </div>
                         </td>
-                        <td class="py-4 px-4 text-center">Slug</td>
+                        <td class="pl-10 py-4 px-4 text-center">Slug</td>
+                        <td class="pr-10 py-4 px-4 text-center">Status</td>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="blog in props.blogs.data" :key="blog.id" class="hover:bg-gray-100 transition-colors group"> 
+                    <tr v-for="blog in getBlogs" :key="blog.id" class="hover:bg-gray-100 transition-colors group border-b border-gray-200"> 
                         <td class="flex gap-x-4 items-center py-4 pl-10">
-                            <Navlink :href="route('blogs.edit', blog.id)" class="font-medium text-left">
+                            <Navlink :href="route('blogs.edit', blog.id)">
+                            <img
+                                :src="urlImage() + blog.image"
+                                alt="no image"
+                                class="w-40 aspect-[3/2] rounded-lg object-cover object-top border border-gray-200"
+                            />
+                            <span class="font-medium text-left pl-2">
                                 {{ blog.title }}
+                            </span>
                             </Navlink>
                         </td>
-                        <td class="font-medium text-left pr-10">{{ blog.slug }}</td>
-                        
+                        <td class="font-medium text-left">{{ blog.slug }}</td>
+                        <td class="font-medium text-center">
+                            <span v-if="blog.status == 'draft' " class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">{{ blog.status }}</span>
+                            <span v-else class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">{{ blog.status }}</span>
+                        </td>
                     </tr>
                 </tbody>
             </table>
