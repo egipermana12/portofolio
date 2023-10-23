@@ -10,11 +10,11 @@ import { useForm } from '@inertiajs/vue3';
 const form = useForm({
     title: '',
     slug: '',
-    content: 'Hello World!'   
+    content: 'Hello World!',
+    image: null   
 })
 
 const submit = () => {
-    console.log(form.content);
     form.post(route('blogs.store'));
 }
 
@@ -45,6 +45,10 @@ const getContent = (val) => {
                         <div class="sm:col-span-2">
                             <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Blog Slug</label>
                             <Textinput v-model="form.slug" :error="form.errors.slug"  class="w-full" placeholder="Type blog slug"></Textinput>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Blog Image</label>
+                            <input type="file" @input="form.image = $event.target.files[0]" />
                         </div>
                         <div class="sm:col-span-2">
                             <label for="description2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>

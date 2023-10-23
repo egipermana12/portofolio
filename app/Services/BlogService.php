@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Blog;
+use App\Models\BlogImages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -32,6 +33,13 @@ class BlogService
             'slug' => $request->slug,
             'content' => $request->content
         ]);
+
+        if($request->hasFile('image')){
+            BlogImages::create([
+                'blog_id' => $blog->id,
+                'image' => $request->file('image')
+            ]);
+        }
 
         return $blog;
     }

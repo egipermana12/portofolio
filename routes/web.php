@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\BlogImagesController;
 use App\Http\Controllers\CKeditorImageUpload;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -41,6 +42,8 @@ Route::middleware([
     Route::resource('blogs', BlogController::class)->except(['index']);
 
     Route::post('/imageUpload', [CKeditorImageUpload::class, 'storeImage'])->name('imageUpload');
+    Route::post('/upload-file', [BlogImagesController::class, 'storeImage']);
+
 });
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {

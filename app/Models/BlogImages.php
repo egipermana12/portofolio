@@ -11,7 +11,7 @@ class BlogImages extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id_blog',
+        'blog_id',
         'image',
     ];
 

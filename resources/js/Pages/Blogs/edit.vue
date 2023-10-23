@@ -5,16 +5,24 @@ import ButtonLoading from '@/Components/ButtonLoading.vue';
 import { useForm } from '@inertiajs/vue3';
 import CKEditor from '@/Components/CKEditor/index.vue';
 
+
 const props = defineProps({
     blogs: Object,
+    images: Object,
 })
 
 const form = useForm({
     title: props.blogs.title,
     slug: props.blogs.slug,
     content: props.blogs.content,
-    id: props.blogs.id  
+    id: props.blogs.id
 })
+
+const formImage = useForm({
+    image: null,
+    id: props.blogs.id
+})
+
 
 const submit = () => {
     form.put(route('blogs.update', props.blogs.id));

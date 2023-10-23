@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\UpdateBlogRequest;
 use App\Models\Blog;
+use App\Models\BlogImages;
 use App\Services\BlogService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -53,7 +54,8 @@ class BlogController extends Controller
      */
     public function edit(Blog $blog)
     {
-        return Inertia::render('Blogs/edit', ['blogs' => $blog]);
+        $images = BlogImages::where('blog_id', $blog->id)->get();
+        return Inertia::render('Blogs/edit', ['blogs' => $blog, 'images' => $images]);
     }
 
     /**
